@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search</title>
+<style>
+  form,h1,ul{
+    text-align: center;
+  }
+
+  body{
+    background: #FF0000;
+  }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+  <h1>Search within the users</h1>
+  <div>
+  <form method="post" action="/search">
+    <input type="text" name="searchbar" class="search" placeholder="Search Here" id="search">
+    <input type="submit" name="submit" class="submit" value="submit">
+  </form>
+  <ul id="result"> <h2>Does it work?</h2></ul>
+  </div>
+</body>
+</html>
+
+<!-- // Part 2 AJAX WEBSERVER Modify your form again so that AJAX requests happen at most once every 300 milliseconds.
+Do this work in a git branch called "bandwidth-optimization". Then, merge this branch into master with a pull request. //
+ -->
+ <script type="text/javascript">
+ var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+  $(document).ready(function(){
+    $("#search").keyup(function(){
+      delay(function(){
+        console.log('User is typing');
+      }, 300)
+      let users = $("#search").val();
+        $.post( "/search",{user: users}, function(data) {
+          console.log(data.usersinfo)
+          $( "#result" ).html(data);
+          for(let i = 0; i < data.usersinfo.length; i++) {
+            $("#result").append(`<li> ${data.usersinfo[i].firstname} ${data.usersinfo[i].lastname} ${data.usersinfo[i].email}</li>`)
+          }                                   
+});
+    })
+
+  });
+</script>

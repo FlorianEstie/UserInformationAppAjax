@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+	h1{
+		text-align: center;
+	}
+
+	body{
+		background: #42f44b;
+	}
+
+	p{
+		font-size: 20px;
+		text-align: center;
+	}
+</style>
+</head>
+<body>
+<h1>User matches</h1>
+<% for(let i = 0; i < users.length; i++) { %>
+<% if(data.searchbar == users[i].firstname || data.searchbar == users[i].lastname){%>
+	<p>
+		<%= users[i].firstname + ' ' + users[i].lastname %>
+	</p>
+<% } %>
+<% } %>
+</body>
+</html>
